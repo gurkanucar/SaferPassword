@@ -1,8 +1,10 @@
-package com.gucarsoft.saferpassword;
+package com.gucarsoft.saferpassword.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.gucarsoft.saferpassword.R;
 
 public class Settings extends AppCompatActivity {
 

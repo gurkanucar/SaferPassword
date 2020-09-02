@@ -1,4 +1,4 @@
-package com.gucarsoft.saferpassword.ui.settings;
+package com.gucarsoft.saferpassword.Views.Fragments.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

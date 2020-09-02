@@ -1,4 +1,4 @@
-package com.gucarsoft.saferpassword.ui.add;
+package com.gucarsoft.saferpassword.Views.Fragments.add;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -15,9 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.gucarsoft.saferpassword.MainActivity;
 import com.gucarsoft.saferpassword.Model.Password;
 import com.gucarsoft.saferpassword.R;
 import com.gucarsoft.saferpassword.Service.PasswordService;
@@ -69,7 +66,7 @@ public class AddFragment extends Fragment {
                             password.setNote(note.getEditText().getText().toString());
                             passwordService.savePassword(password);
                             System.out.println(password.toString());
-                            Toast.makeText(getContext(), "Password saved!", Toast.LENGTH_LONG);
+                            Toast.makeText(getContext(), "Password saved!", Toast.LENGTH_LONG).show();
 
                             title.getEditText().setText("");
                             userName.getEditText().setText("");

@@ -1,16 +1,16 @@
-package com.gucarsoft.saferpassword.ui.passwords;
+package com.gucarsoft.saferpassword.Views.Fragments.add;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PasswordsViewModel extends ViewModel {
+public class AddViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public PasswordsViewModel() {
+    public AddViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is dashboard fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,4 +1,4 @@
-package com.gucarsoft.saferpassword.ui.passwords;
+package com.gucarsoft.saferpassword.Views.Fragments.passwords;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gucarsoft.saferpassword.R;
+import com.gucarsoft.saferpassword.Service.PasswordService;
+import com.gucarsoft.saferpassword.Views.RecyclerViewAdapter;
 
 public class PasswordsFragment extends Fragment {
 
@@ -23,11 +27,20 @@ public class PasswordsFragment extends Fragment {
         passwordsViewModel =
                 ViewModelProviders.of(this).get(PasswordsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_passwords, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+
+        PasswordService passwordService=new PasswordService(getContext());
+
+        RecyclerView rcview = root.findViewById(R.id.recyclerview);
+
+        System.out.println("PASSWORD LIST LENGTH: "+passwordService.list().size());
+        RecyclerViewAdapter rcAdapter=new RecyclerViewAdapter(passwordService.list(),getContext());
+        rcview.setAdapter(rcAdapter);
+        rcview.setLayoutManager(new LinearLayoutManager(getContext()));
+
         passwordsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
         return root;
