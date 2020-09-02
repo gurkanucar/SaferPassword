@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gucarsoft.saferpassword.Model.Password;
 import com.gucarsoft.saferpassword.R;
+import com.gucarsoft.saferpassword.Service.PasswordService;
+import com.gucarsoft.saferpassword.Views.Fragments.passwords.PasswordsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.passwordTxt.setText("***********");
         holder.title.setText(passwordList.get(position).getTitle().toUpperCase());
         holder.userName.setText(passwordList.get(position).getUserName());
@@ -76,14 +81,41 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+                                builder2.setTitle(passwordList.get(position).getTitle()+" will delete...");
+                                builder2.setMessage("Are you sure?");
+                                builder2.setPositiveButton("No", null);
+                                builder2.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        PasswordService passwordService=new PasswordService(context);
+                                        passwordService.delete(passwordList.get(position));
+                                        Toast.makeText(context,"Password deleted",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                builder2.show();
+                                break;
+
+                        }
+                    }
+                };
                 Password password = passwordList.get(position);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
                 builder.setTitle(password.getTitle());
-                builder.setMessage(password.getUserName()+"\n"+password.getMail()+"\n"+password.getPassword()+"\n"+password.getNote());
-                builder.setNegativeButton("Delete", null);
-                builder.setPositiveButton("Edit", null);
-                builder.setNeutralButton("Ok", null);
-                builder.show();
+                builder.setMessage(password.getUserName()+"\n"+password.getMail()+"\n"+password.getPassword()+"\n"+password.getNote()).setPositiveButton("Edit", dialogClickListener)
+                        .setNegativeButton("Delete", dialogClickListener)
+                        .setNeutralButton("Ok",null)
+                        .show();
                 return false;
             }
         });

@@ -20,6 +20,7 @@ import com.gucarsoft.saferpassword.Views.RecyclerViewAdapter;
 
 public class PasswordsFragment extends Fragment {
 
+    RecyclerView rcview;
     private PasswordsViewModel passwordsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -30,12 +31,13 @@ public class PasswordsFragment extends Fragment {
 
         PasswordService passwordService=new PasswordService(getContext());
 
-        RecyclerView rcview = root.findViewById(R.id.recyclerview);
+        rcview = root.findViewById(R.id.recyclerview);
 
         System.out.println("PASSWORD LIST LENGTH: "+passwordService.list().size());
         RecyclerViewAdapter rcAdapter=new RecyclerViewAdapter(passwordService.list(),getContext());
         rcview.setAdapter(rcAdapter);
         rcview.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         passwordsViewModel.getText().observe(this, new Observer<String>() {
             @Override
