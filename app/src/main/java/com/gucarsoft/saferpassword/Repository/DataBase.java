@@ -71,7 +71,7 @@ public class DataBase extends SQLiteOpenHelper {
         contentValues.put("password",password.getPassword());
         contentValues.put("note",password.getNote());
         contentValues.put("category",password.getCategory());
-        db.update("password",contentValues,"a",new String[]{String.valueOf(password.getId())});
+        db.update("passwords",contentValues,"id=?",new String[]{String.valueOf(password.getId())});
     }
 
     public void deletePassword(SQLiteDatabase db,Password password)throws SQLException {

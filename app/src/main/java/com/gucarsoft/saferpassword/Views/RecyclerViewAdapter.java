@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.gucarsoft.saferpassword.MainActivity;
 import com.gucarsoft.saferpassword.Model.Password;
 import com.gucarsoft.saferpassword.R;
 import com.gucarsoft.saferpassword.Service.PasswordService;
@@ -81,20 +83,21 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                ViewDialog alert = new ViewDialog();
+                                alert.showDialog(context, passwordList.get(holder.getAdapterPosition()),passwordList);
                                 break;
 
-                            case DialogInterface.BUTTON_NEGATIVE:
+                            case DialogInterface.BUTTON_NEUTRAL:
                                 AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
                                 builder2.setTitle(passwordList.get(holder.getAdapterPosition()).getTitle()+" will delete...");
                                 builder2.setMessage("Are you sure?");
-                                builder2.setPositiveButton("No", null);
-                                builder2.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                                builder2.setNegativeButton("No",null);
+                                builder2.setPositiveButton("Yes",  new DialogInterface.OnClickListener(){
 
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        PasswordService passwordService=new PasswordService(context);
+                                        PasswordService passwordService=new PasswordService(context,"selam");
                                         passwordService.delete(passwordList.get(holder.getAdapterPosition()));
                                         Toast.makeText(context,"Password deleted",Toast.LENGTH_SHORT).show();
                                         PasswordsFragment.removeItem(holder.getAdapterPosition());
@@ -110,10 +113,10 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
 
                     Password password = passwordList.get(holder.getAdapterPosition());
                     androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
-                    builder.setTitle(password.getTitle());
-                    builder.setMessage(password.getUserName() + "\n" + password.getMail() + "\n" + password.getPassword() + "\n" + password.getNote()).setPositiveButton("Edit", dialogClickListener)
-                            .setNegativeButton("Delete", dialogClickListener)
-                            .setNeutralButton("Ok", null)
+                    builder.setTitle(password.getTitle().toUpperCase());
+                    builder.setMessage(password.getUserName() + "\n\n" + password.getMail() + "\n\n" + password.getPassword() + "\n\n" + password.getNote()).setNegativeButton("Edit", dialogClickListener)
+                            .setPositiveButton("Ok", null)
+                            .setNeutralButton("Delete", dialogClickListener)
                             .show();
 
                 return false;
