@@ -14,14 +14,19 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gucarsoft.saferpassword.Model.Password;
 import com.gucarsoft.saferpassword.R;
 import com.gucarsoft.saferpassword.Service.PasswordService;
 import com.gucarsoft.saferpassword.Views.RecyclerViewAdapter;
 
+import java.util.List;
+
 public class PasswordsFragment extends Fragment {
 
-    RecyclerView rcview;
+   static RecyclerView rcview;
+    static RecyclerViewAdapter rcAdapter;
     private PasswordsViewModel passwordsViewModel;
+    private static List<Password> passwordList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,11 +38,12 @@ public class PasswordsFragment extends Fragment {
 
         rcview = root.findViewById(R.id.recyclerview);
 
-        System.out.println("PASSWORD LIST LENGTH: "+passwordService.list().size());
-        RecyclerViewAdapter rcAdapter=new RecyclerViewAdapter(passwordService.list(),getContext());
+        passwordList=passwordService.list();
+
+        System.out.println("PASSWORD LIST LENGTH: "+passwordList.size());
+         rcAdapter=new RecyclerViewAdapter(passwordList,getContext());
         rcview.setAdapter(rcAdapter);
         rcview.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
         passwordsViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -46,5 +52,10 @@ public class PasswordsFragment extends Fragment {
             }
         });
         return root;
+
+    }
+    public static void removeItem(int position){
+        rcAdapter.notifyItemRemoved(position);
+        passwordList.remove(position);
     }
 }
