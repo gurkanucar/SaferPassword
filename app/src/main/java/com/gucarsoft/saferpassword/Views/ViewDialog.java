@@ -68,7 +68,7 @@ public class ViewDialog {
             @Override
             public void onClick(View v) {
                 passwordList.remove(existPassword);
-                PasswordService passwordService = new PasswordService(context,"selam");
+                PasswordService passwordService = new PasswordService(context);
                 existPassword.setTitle(title.getEditText().getText().toString());
                 existPassword.setUserName(userName.getEditText().getText().toString());
                 existPassword.setMail(mail.getEditText().getText().toString());
@@ -82,18 +82,6 @@ public class ViewDialog {
 
             }
         });
-
-
-     //   TextView text =dialog.findViewById(R.id.text_dialog);
-       // text.setText(msg);
-
-//        Button dialogButton =  dialog.findViewById(R.id.btn_dialog);
-//        dialogButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
 
         dialog.show();
 

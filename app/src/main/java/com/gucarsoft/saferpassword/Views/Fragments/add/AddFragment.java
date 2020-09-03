@@ -57,7 +57,7 @@ public class AddFragment extends Fragment {
                             builder.setNegativeButton("Ok", null);
                             builder.show();
                         } else {
-                            PasswordService passwordService = new PasswordService(getContext(),"selam");
+                            PasswordService passwordService = new PasswordService(getContext());
                             Password password = new Password();
                             password.setTitle(title.getEditText().getText().toString());
                             password.setUserName(userName.getEditText().getText().toString());

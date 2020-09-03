@@ -36,7 +36,7 @@ public class PasswordsFragment extends Fragment {
                 ViewModelProviders.of(this).get(PasswordsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_passwords, container, false);
 
-        PasswordService passwordService = new PasswordService(getContext(), "selam");
+        PasswordService passwordService = new PasswordService(getContext());
 
         rcview = root.findViewById(R.id.recyclerview);
 

@@ -97,7 +97,7 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
 
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        PasswordService passwordService=new PasswordService(context,"selam");
+                                        PasswordService passwordService=new PasswordService(context);
                                         passwordService.delete(passwordList.get(holder.getAdapterPosition()));
                                         Toast.makeText(context,"Password deleted",Toast.LENGTH_SHORT).show();
                                         PasswordsFragment.removeItem(holder.getAdapterPosition());

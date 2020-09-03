@@ -21,28 +21,18 @@ import javax.crypto.SecretKey;
 public class PasswordService {
     static Context context;
     static SQLiteDatabase db;
-    static String key;
 
-    public PasswordService(Context _context,String _key) {
+    public PasswordService(Context _context) {
         DataBase dataBase = new DataBase(_context);
         SQLiteDatabase _db = dataBase.getWritableDatabase();
         context = _context;
         db = _db;
-        key="asdfghjklqwertyu";
     }
 
     public void savePassword(Password _password) {
 
         try {
             Password password = _password;
-//            System.out.println(String.valueOf(Encryption.encryptMsg(password.getTitle(), secret)));
-//            password.setTitle(String.valueOf(Encryption.encryptMsg(password.getTitle(), secret)));
-//            password.setUserName(String.valueOf(Encryption.encryptMsg(password.getUserName(), secret)));
-//            password.setMail(String.valueOf(Encryption.encryptMsg(password.getMail(), secret)));
-//            password.setPassword(String.valueOf(Encryption.encryptMsg(password.getPassword(), secret)));
-//            password.setNote(String.valueOf(Encryption.encryptMsg(password.getNote(), secret)));
-//            password.setCategory(String.valueOf(Encryption.encryptMsg(password.getTitle(), secret)));
-
             DataBase dataBase = new DataBase(context);
             dataBase.savePassword(db, password);
         }
