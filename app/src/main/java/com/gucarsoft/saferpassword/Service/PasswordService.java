@@ -11,6 +11,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
@@ -35,8 +37,7 @@ public class PasswordService {
             Password password = _password;
             DataBase dataBase = new DataBase(context);
             dataBase.savePassword(db, password);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -54,10 +55,22 @@ public class PasswordService {
     public List<Password> list() {
         DataBase dataBase = new DataBase(context);
         List<Password> passwordList = dataBase.listAllPasswords(db);
-//        for (Password pswd:passwordList
-//             ) {
-//
-//        }
         return passwordList;
+    }
+
+    public List<Password> list(String s) {
+        DataBase dataBase = new DataBase(context);
+        List<Password> passwordList = dataBase.listAllPasswords(db);
+        List<Password> filteredList = new ArrayList<>();
+        String searched = s.toLowerCase();
+
+        Iterator<Password> iterator = passwordList.iterator();
+        while (iterator.hasNext()) {
+            Password pass = iterator.next();
+            if (pass.getTitle().toLowerCase().contains(searched) || pass.getUserName().toLowerCase().contains(searched) || pass.getMail().toLowerCase().contains(searched) || pass.getNote().toLowerCase().contains(searched)) {
+                filteredList.add(pass);
+            }
+        }
+        return filteredList;
     }
 }

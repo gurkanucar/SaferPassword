@@ -30,7 +30,11 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
     List<Password> passwordList = new ArrayList<>();
     Context context;
 
-    public RecyclerViewAdapter(List<Password> _passwordList,Context _context) {
+    public void setPasswordList(List<Password> passwordList) {
+        this.passwordList = passwordList;
+    }
+
+    public RecyclerViewAdapter(List<Password> _passwordList, Context _context) {
         passwordList = _passwordList;
         System.out.println("PASSWORD LIST LENGTH FROM ADAPTER: "+passwordList.size());
         context= _context;

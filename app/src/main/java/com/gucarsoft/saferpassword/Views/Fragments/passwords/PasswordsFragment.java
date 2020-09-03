@@ -1,9 +1,12 @@
 package com.gucarsoft.saferpassword.Views.Fragments.passwords;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -27,6 +30,7 @@ public class PasswordsFragment extends Fragment {
 
     static RecyclerView rcview;
     static RecyclerViewAdapter rcAdapter;
+    EditText searchText;
     private PasswordsViewModel passwordsViewModel;
     private static List<Password> passwordList;
 
@@ -36,9 +40,11 @@ public class PasswordsFragment extends Fragment {
                 ViewModelProviders.of(this).get(PasswordsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_passwords, container, false);
 
-        PasswordService passwordService = new PasswordService(getContext());
+        final PasswordService passwordService = new PasswordService(getContext());
 
         rcview = root.findViewById(R.id.recyclerview);
+
+        searchText=root.findViewById(R.id.searchTxt);
 
         passwordList = passwordService.list();
 
@@ -46,6 +52,24 @@ public class PasswordsFragment extends Fragment {
         rcAdapter = new RecyclerViewAdapter(passwordList, getContext());
         rcview.setAdapter(rcAdapter);
         rcview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                rcAdapter.setPasswordList(passwordService.list(searchText.getText().toString()));
+                rcAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         passwordsViewModel.getText().observe(this, new Observer<String>() {
             @Override
