@@ -88,11 +88,12 @@ public class AddFragment extends Fragment {
                         SecureRandom random = new SecureRandom();
                         while (sb.length()<25)
                         {
-                            switch (random.nextInt(3))
+                            switch (random.nextInt(4))
                             {
                                 case 0: sb.append(letters[random.nextInt(letters.length)]); break;
                                 case 1: sb.append(numbers[random.nextInt(numbers.length)]); break;
-                                case 2: sb.append(chars[random.nextInt(chars.length)]); break;
+                                case 2: sb.append(String.valueOf(letters[random.nextInt(letters.length)]).toUpperCase()); break;
+                                case 3: sb.append(chars[random.nextInt(chars.length)]); break;
                             }
                         }
                         passwordText.getEditText().setText(sb.toString());
